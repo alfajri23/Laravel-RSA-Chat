@@ -8,6 +8,10 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+// use App\Service\RSA_Handler;
+use ParagonIE\EasyRSA\KeyPair;
+use ParagonIE\EasyRSA\EasyRSA;
+use \stdClass;
 
 class RegisterController extends Controller
 {
@@ -64,10 +68,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $keyPair = KeyPair::generateKeyPair(2048);
+
+        $secretKey = $keyPair->getPrivateKey();
+        $publicKey = $keyPair->getPublicKey();
+
+        $publicKey = serialize($publicKey);
+        $secretKey = serialize($secretKey);
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'public_key' => $publicKey,
+            'private_key' => $secretKey,
         ]);
     }
 }
+
+?>

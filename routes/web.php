@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Livewire\Chat;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,16 +15,19 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/home', function () {
-    dd("hallo");
-});
 
-Route::get('/user',[LoginController::class, 'show_user']);
+
+
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => ['auth']], function(){
+	Route::get('/user',[LoginController::class, 'show_user']);
+	Route::get('/chat/{id}',Chat::class)->name('main-chat');
+	Route::post('/send_image',[Chat::class,'store_image'])->name('store_image');
+	Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+});
+
+

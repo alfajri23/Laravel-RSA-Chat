@@ -18,7 +18,46 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <style type="text/css">
+
+        #main{
+            height: 95vh;
+        }
+
+        .chat-body{
+            height: 95%;
+        }
+
+        .chat-message{
+            overflow: auto;
+        }
+
+        .chat-action{
+            height: 10%;
+        }
+
+        .chat-text-send{
+            display: inline-block;
+            float: right;
+            padding: 10px;
+            border-radius: 10px 10px 0 10px;
+            background-color: lightgreen;
+        }
+
+        .chat-text-receiver{
+            display: inline-block;
+            float: left;
+            padding: 10px;
+            border-radius: 10px 10px 10px 0;
+            background-color: gray;
+            /*wire:poll.2000ms*/
+        }
+    </style>
+    
+     @livewireStyles
 </head>
+
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -75,9 +114,12 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="">
             @yield('content')
+            {{isset($slot) ? $slot : null}}
         </main>
     </div>
+
+@livewireScripts
 </body>
 </html>

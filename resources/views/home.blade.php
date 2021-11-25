@@ -1,23 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+<style type="text/css">
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+    a{
+        color: #3d607c !important;
+    }
 
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
+    a:link{
+        text-decoration: none;
+        margin: 10px 0;
+    }
+
+    .card{
+        width: 100% !important;
+        border-radius: 20px;
+        background-color: #cde9e0;
+    }
+
+</style>
+
+<div class="container py-3">
+    <div class="row justify-content-center my-3">
+        <h3>Pilih Teman Chatmu</h3>
     </div>
+
+    <div class="row flex-column justify-content-center px-4">
+        @foreach($users as $user)
+        <a href="{{route('main-chat',$user["id"])}}">
+            <div class="card my-0" style="width: 90%;">
+              <div class="card-body">
+                <h5 class="card-title font-weight-bold">{{$user["name"]}}</h5>
+              </div>
+            </div>
+        </a>
+        @endforeach
+    </div>
+
 </div>
 @endsection
